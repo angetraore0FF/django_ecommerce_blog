@@ -1,0 +1,14 @@
+{% extends 'home.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <h2>Activation du compte</h2>
+            <p>Nous avons envoyé un email de confirmation à votre adresse.</p>
+            <p>Veuillez cliquer sur le lien dans cet email pour activer votre compte.</p>
+            <p>Si vous ne recevez pas l'email, vérifiez votre dossier spam ou <a href="{% url 'register' %}">essayez de vous inscrire à nouveau</a>.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

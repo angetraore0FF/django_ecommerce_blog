@@ -1,0 +1,561 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>LuxuryTime - Nos Marques</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Découvrez les marques horlogères prestigieuses proposées par LuxuryTime">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --gold-color: #d4af37;
+            --light-gray: #f8f8f8;
+            --dark-gray: #333;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+        }
+        
+        /* Header */
+        .alt-header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 25px;
+        }
+        
+        .main-nav a {
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .main-nav a.active,
+        .main-nav a:hover {
+            color: var(--gold-color);
+        }
+        
+        .main-nav a.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gold-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .login-btn {
+            padding: 8px 20px;
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .welcome-message {
+            margin-right: 10px;
+            font-weight: 500;
+        }
+        
+        .logout-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font: inherit;
+            color: inherit;
+        }
+        
+        .logout-btn:hover {
+            color: var(--gold-color);
+        }
+        
+        .cart-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--gold-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        /* Styles spécifiques pour la page Marques */
+        .brand-page-header {
+            background-color: #f9f9f9;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .brand-page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #222;
+            margin-bottom: 15px;
+        }
+        
+        .brand-page-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .brand-detail-section {
+            padding: 80px 0;
+        }
+        
+        .brand-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .brand-card {
+            display: flex;
+            margin-bottom: 60px;
+            align-items: center;
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .brand-card:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .brand-image {
+            flex: 1;
+            min-height: 400px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .brand-content {
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .brand-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #222;
+            margin-bottom: 20px;
+        }
+        
+        .brand-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .brand-models {
+            margin-top: 30px;
+        }
+        
+        .brand-models h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .model-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .model-item {
+            padding: 10px;
+            border-left: 3px solid #d4af37;
+            background-color: #fafafa;
+        }
+        
+        .model-item h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #444;
+        }
+        
+        .model-item p {
+            font-size: 0.9rem;
+            color: #777;
+            margin: 0;
+        }
+
+        /* Footer */
+        .alt-footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-col h4 {
+            color: var(--gold-color);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-col p, .footer-col address {
+            color: #ddd;
+            line-height: 1.6;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-col a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col a:hover {
+            color: var(--gold-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .brand-card {
+                flex-direction: column;
+            }
+            
+            .brand-image {
+                width: 100%;
+                min-height: 300px;
+            }
+            
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Newsletter Section */
+.newsletter-alt {
+  background-color: #f5f5f5;
+  padding: 60px 0;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.newsletter-alt .container {
+  max-width: 800px;
+}
+
+.newsletter-alt h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.newsletter-alt p {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.newsletter-form {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 15px 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.newsletter-form input:focus {
+  border-color: var(--gold-color);
+}
+
+.newsletter-form button {
+  background-color: var(--gold-color);
+  color: white;
+  border: none;
+  padding: 0 30px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.newsletter-form button:hover {
+  background-color: #c9a227;
+}
+
+@media (max-width: 768px) {
+  .newsletter-form {
+      flex-direction: column;
+  }
+  
+  .newsletter-form input {
+      border-radius: 4px;
+      margin-bottom: 10px;
+  }
+  
+  .newsletter-form button {
+      border-radius: 4px;
+      padding: 15px;
+  }
+}
+    </style>
+</head>
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<body class="home-alt">
+
+    {% include 'header.html' %}
+
+    <!-- Brand Page Header -->
+    <section class="brand-page-header">
+        <div class="container">
+            <h1>Nos Marques d'Exception</h1>
+            <p>Découvrez les maisons horlogères les plus prestigieuses qui façonnent l'histoire du temps avec passion et excellence</p>
+        </div>
+    </section>
+
+    <!-- Brand Detail Section -->
+    <section class="brand-detail-section">
+        <div class="brand-container">
+            <!-- Brand 1 -->
+            <div class="brand-card">
+                <div class="brand-image" style="background-image: url('{% static 'images/Seiko_royal_oak_or.png' %}')"></div>
+                <div class="brand-content">
+                    <h2>Seiko Royal Oak</h2>
+                    <p>Fondée en 1881, Seiko Royal Oak incarne l'excellence horlogère japonaise alliée à un design audacieux. Chaque pièce est une symphonie de précision et d'élégance, réalisée par des maîtres horlogers.</p>
+                    <p>La collection Royal Oak, avec son boîtier octogonal iconique, représente le mariage parfait entre tradition et innovation.</p>
+                    <div class="brand-models">
+                        <h3>Modèles phares</h3>
+                        <div class="model-list">
+                            <div class="model-item">
+                                <h4>Royal Oak Chronograph</h4>
+                                <p>Mouvement automatique, boîtier or rose</p>
+                            </div>
+                            <div class="model-item">
+                                <h4>Royal Oak Offshore</h4>
+                                <p>Édition limitée, cadran bleu</p>
+                            </div>
+                            <div class="model-item">
+                                <h4>Royal Oak Skeleton</h4>
+                                <p>Mécanisme apparent, acier poli</p>
+                            </div>
+                            <div class="model-item">
+                                <h4>Royal Oak Ultra-thin</h4>
+                                <p>Épaisseur record de 6.8mm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Brand 2 -->
+            <div class="brand-card">
+                <div class="brand-image" style="background-image: url('{% static 'images/Seiko_oyster_perpetual_bleu.png' %}')"></div>
+                <div class="brand-content">
+                    <h2>Seiko Oyster</h2>
+                    <p>La légendaire maison Seiko Oyster, fondée en 1905, a révolutionné l'horlogerie avec ses montres étanches. Symbole de robustesse et de précision, chaque modèle est une icône intemporelle.</p>
+                    <p>Le mouvement Perpetual, développé en 1931, reste l'un des mécanismes les plus fiables au monde, témoignant d'un savoir-faire inégalé.</p>
+                    <div class="brand-models">
+                        <h3>Modèles phares</h3>
+                        <div class="model-list">
+                            <div class="model-item">
+                                <h4>Oyster Perpetual</h4>
+                                <p>Cadran bleu, acier inoxydable</p>
+                            </div>
+                            <div class="model-item">
+                                <h4>Oyster Datejust</h4>
+                                <p>Lunette cannelée, cadran argenté</p>
+                            </div>
+                            <div class="model-item">
+                                <h4>Oyster GMT-Master</h4>
+                                <p>Fuseaux horaires multiples</p>
+                            </div>
+                            <div class="model-item">
+                                <h4>Oyster Yacht-Master</h4>
+                                <p>Édition nautique premium</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Brand 3 -->
+            <div class="brand-card">
+                <div class="brand-image" style="background-image: url('{% static 'images/seiko-mod-batman-gmt.png' %}')"></div>
+                <div class="brand-content">
+                    <h2>Seiko Nautilus</h2>
+                    <p>Née en 1976, la collection Seiko Nautilus a redéfini les codes de l'horlogerie sportive avec son boîtier coussin audacieux. Alliant élégance et performance, ces montres sont devenues des objets de désir.</p>
+                    <p>La ligne Tiffany, avec son cadran bleu signature, représente l'apogée du raffinement horloger contemporain.</p>
+                    <div class="brand-models">
+                        <h3>Modèles phares</h3>
+                        <div class="model-list">
+                            <div class="model-item">
+                                <h4>Nautilus Tiffany</h4>
+                                <p>Cadran bleu dégradé, acier poli</p>
+                            </div>
+                            <div class="model-item">
+                                <h4>Nautilus Chronograph</h4>
+                                <p>Complications chronographe</p>
+                            </div>
+                            <div class="model-item">
+                                <h4>Nautilus Travel Time</h4>
+                                <p>Affichage double fuseau</p>
+                            </div>
+                            <div class="model-item">
+                                <h4>Nautilus Moon Phase</h4>
+                                <p>Phase de lune intégrée</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter-alt">
+        <div class="container">
+            <div class="newsletter-content">
+                <h3>Abonnez-vous à notre newsletter</h3>
+                <p>Recevez en exclusivité nos nouvelles collections et offres spéciales</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Votre email">
+                    <button type="submit">S'abonner</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    {% include 'footer.html' %}
+
+    <script>
+        // Animation des cartes de marques
+        document.addEventListener('DOMContentLoaded', function() {
+            const brandCards = document.querySelectorAll('.brand-card');
+            
+            brandCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `opacity 0.5s ${index * 0.2}s, transform 0.5s ${index * 0.2}s`;
+                
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100);
+            });
+            
+            // Gestion de la newsletter
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const emailInput = this.querySelector('input[type="email"]');
+                    if (emailInput.value) {
+                        alert('Merci pour votre inscription à notre newsletter !');
+                        emailInput.value = '';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>LuxuryTime - Confirmation</title>
+    <!-- Mêmes balises meta et liens que dans home.html -->
+    <style>
+        .confirmation-container {
+            max-width: 800px;
+            margin: 100px auto;
+            text-align: center;
+            padding: 40px;
+        }
+        .confirmation-icon {
+            font-size: 5rem;
+            color: #d4af37;
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .btn-primary {
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body class="home-alt">
+    <!-- Header identique -->
+    
+    <main class="confirmation-container">
+        <div class="confirmation-icon">✓</div>
+        <h1>Merci pour votre commande!</h1>
+        <p>Votre commande #{{ commande.id }} a été passée avec succès.</p>
+        <p>Un email de confirmation avec la facture vous a été envoyé.</p>
+        
+        <div class="btn-group">
+            <a href="?download=pdf" class="btn-primary">Télécharger la facture (PDF)</a>
+            <a href="{% url 'montres' %}" class="btn-primary">Retour à la boutique</a>
+        </div>
+    </main>
+
+    <!-- Footer identique -->
+</body>
+</html>

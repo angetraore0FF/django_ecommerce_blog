@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modifier le commentaire</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 20px auto; }
+        textarea { width: 100%; padding: 10px; margin: 10px 0; }
+        .btn { padding: 8px 15px; text-decoration: none; border-radius: 4px; }
+        .btn-save { background: #4CAF50; color: white; border: none; }
+        .btn-cancel { background: #f44336; color: white; margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Modifier le commentaire</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-save">Enregistrer</button>
+        <a href="{% url 'blog:post_detail' slug=comment.post.slug %}" class="btn btn-cancel">Annuler</a>
+    </form>
+</body>
+</html>

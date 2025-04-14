@@ -1,0 +1,117 @@
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>Seiko - Excellence Horlogère</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Découvrez notre collection exclusive de montres de luxe et accessoires haut de gamme">
+  
+  <!-- CSS Spécifique à cette page -->
+  <link rel="stylesheet" href="{% static 'css/home-alt.css' %}">
+  <link rel="stylesheet" href="{% static 'css/header.css' %}">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Style supplémentaire pour le message de bienvenue */
+    .welcome-message {
+      margin-left: 20px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .logout-btn {
+      background: none;
+      border: none;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      padding: 0;
+      margin-left: 20px;
+    }
+    
+    .logout-btn:hover {
+      color: #d4af37;
+    }
+  </style>
+</head>
+
+<body class="home-alt">
+  <!-- Header Simplifié -->
+  {% include 'header.html' %}
+  <!-- Hero Section -->
+  <section class="hero-alt">
+    <div class="hero-content">
+      <h1>L'Art du Temps</h1>
+      <p>Découvrez des pièces uniques façonnées par les maîtres horlogers</p>
+      <a href="{% url 'montres' %}" class="cta-button">Explorer la collection</a>
+    </div>
+  </section>
+
+  <!-- Featured Collection -->
+  <section class="featured-collection">
+    <div class="container">
+      <h2 class="section-title">Collection Phare</h2>
+      <div class="collection-grid">
+        <div class="collection-item">
+          <img src="{% static 'images/seiko_nautilus_tiffany_black1.png' %}" alt="Montre de luxe">
+          <div class="collection-info">
+            <h3>Édition Limitée 2023</h3>
+            <p>Tiffany full black</p>
+          </div>
+        </div>
+        <div class="collection-item">
+          <img src="{% static 'images/seiko_oak skeleton_full_black.png' %}" alt="Montre de luxe">
+          <div class="collection-info">
+            <h3>Mouvement skeleton</h3>
+            <p>Précision et élégance</p>
+          </div>
+        </div>
+        <div class="collection-item">
+          <img src="{% static 'images/seiko-mod-batman-gmt.png' %}" alt="Montre de luxe">
+          <div class="collection-info">
+            <h3>Classique Intemporel</h3>
+            <p>Pour les puristes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brand Showcase -->
+  <section class="brand-showcase">
+    <div class="container">
+      <h2 class="section-title">Nos Marques d'Exception</h2>
+      <div class="brand-grid">
+        <img src="{% static 'images/Seiko_royal_oak_or.png' %}" alt="Marque de luxe">
+        <img src="{% static 'images/Seiko_royal_oak_argent.png' %}" alt="Marque de luxe">
+        <img src="{% static 'images/Seiko_oyster_perpetual_bleu.png' %}" alt="Marque de luxe">
+        <img src="{% static 'images/seiko-mod-yachtmaster-bleu-gris.png' %}" alt="Marque de luxe">
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter-alt">
+    <div class="container">
+      <div class="newsletter-content">
+        <h3>Abonnez-vous à notre newsletter</h3>
+        <p>Recevez en exclusivité nos nouvelles collections et offres spéciales</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Votre email">
+          <button type="submit">S'abonner</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  {% include 'footer.html' %}
+
+  <!-- JS Spécifique à cette page -->
+  <script src="{% static 'js/home-alt.js' %}"></script>
+</body>
+</html>

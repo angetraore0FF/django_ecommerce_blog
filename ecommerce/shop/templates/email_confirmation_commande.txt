@@ -1,0 +1,20 @@
+Bonjour {{ commande.utilisateur.first_name }},
+
+Merci pour votre commande sur LuxuryTime ! Voici les détails de votre achat :
+
+Numéro de commande : #{{ commande.id }}
+Date de commande : {{ commande.date_commande|date:"d/m/Y H:i" }}
+Montant total : {{ commande.montant_total }} €
+Statut : {{ commande.get_statut_display }}
+
+Détail des articles :
+{% for ligne in commande.lignes.all %}
+- {% if ligne.montre %}{{ ligne.montre.nom }}{% else %}{{ ligne.accessoire.nom }}{% endif %} x{{ ligne.quantite }} : {{ ligne.prix_unitaire }} €
+{% endfor %}
+
+Adresse de livraison :
+{{ commande.adresse_livraison }}
+
+Méthode de paiement : {{ commande.methode_paiement }}
+
+Vous trouverez votre facture en pièce jointe de cet email.

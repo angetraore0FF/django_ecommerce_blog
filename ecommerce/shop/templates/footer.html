@@ -1,0 +1,38 @@
+{% load static %}
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>LuxuryTime</h3>
+                <p>Experts en montres de luxe depuis 1985. Authenticité garantie.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Boutique</h3>
+                <ul>
+                    <li><a href="{% url 'montres' %}">Montres</a></li>
+                    <li><a href="{% url 'accessoire' %}">Accessoires</a></li>
+                    <li><a href="{% url 'blog:post_list' %}">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="{% url 'historique_commandes' %}">Historique</a></li>
+                    <li><a href="{% url 'mes_favoris' %}">Favoris</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Informations</h3>
+                <ul>
+                    <li><a href="{% url 'CGV' %}">Conditions Générales</a></li>
+                    <li><a href="{% url 'mentions-legales' %}">Mentions Légales</a></li>
+                    <li><a href="{% url 'confidentialite' %}">Confidentialité</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 LuxuryTime. Tous droits réservés.</p>
+        </div>
+    </div>
+</footer>

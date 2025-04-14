@@ -1,0 +1,360 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>LuxuryTime - Mentions Légales</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #333;
+      line-height: 1.6;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header */
+    .alt-header {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+
+    .logo img {
+      height: auto;
+      width: 180px;
+    }
+
+    .main-nav ul {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+    }
+
+    .main-nav a {
+      font-weight: 500;
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: color 0.3s;
+      font-size: 0.95rem;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .main-nav a.active,
+    .main-nav a:hover {
+      color: #d4af37;
+    }
+
+    .main-nav a.active:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #d4af37;
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .login-btn {
+      padding: 8px 15px;
+      border: 1px solid #1a1a1a;
+      border-radius: 4px;
+      transition: all 0.3s;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: #1a1a1a;
+    }
+
+    .login-btn:hover {
+      background-color: #1a1a1a;
+      color: white;
+    }
+
+    .welcome-message {
+      margin-right: 5px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    .logout-btn:hover {
+      color: #d4af37;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 60px 0 20px;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-column h3 {
+      font-family: 'Playfair Display', serif;
+      color: #d4af37;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    .footer-column p, 
+    .footer-column address {
+      color: #bbb;
+      font-style: normal;
+      line-height: 1.8;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column a {
+      color: #ddd;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-column a:hover {
+      color: #d4af37;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    /* Styles spécifiques Mentions Légales */
+    .legal-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: white;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    
+    .legal-title {
+      font-family: 'Playfair Display', serif;
+      color: #1a1a1a;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2rem;
+      border-bottom: 2px solid #d4af37;
+      padding-bottom: 10px;
+    }
+    
+    .legal-section {
+      margin-bottom: 25px;
+    }
+    
+    .section-title {
+      color: #d4af37;
+      margin: 20px 0 10px;
+      font-size: 1.3rem;
+    }
+    
+    .legal-text {
+      margin-bottom: 15px;
+    }
+    
+    .company-info {
+      background: #f8f8f8;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 20px 0;
+    }
+    
+    .company-info p {
+      margin-bottom: 8px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .main-nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+      
+      .legal-container {
+        padding: 20px;
+      }
+      
+      .legal-title {
+        font-size: 1.6rem;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="alt-header">
+    <div class="container">
+      <div class="header-top">
+        <a href="{% url 'home' %}" class="logo">
+          <img src="{% static 'images/logo.png' %}" alt="LuxuryTime">
+        </a>
+        
+        <nav class="main-nav">
+          <ul>
+            <li><a href="{% url 'home' %}">Accueil</a></li>
+            <li><a href="{% url 'montres' %}">Montres</a></li>
+            <li><a href="{% url 'blog:post_list' %}">Blog</a></li>
+            <li><a href="{% url 'CGV' %}">CGV</a></li>
+            <li><a href="{% url 'mentions-legales' %}" class="active">Mentions</a></li>
+          </ul>
+        </nav>
+        
+        <div class="user-actions">
+          {% if user.is_authenticated %}
+            <span class="welcome-message">Bonjour, {{ user.username }}</span>
+            <a href="{% url 'logout' %}" class="logout-btn">Déconnexion</a>
+          {% else %}
+            <a href="{% url 'login' %}" class="login-btn">Connexion</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="legal-container">
+      <h1 class="legal-title">Mentions Légales</h1>
+      
+      <div class="legal-section">
+        <p class="legal-text">Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique, voici les informations légales concernant notre site web.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Éditeur du Site</h2>
+        <div class="company-info">
+          <p><strong>Société :</strong> LuxuryTime SAS</p>
+          <p><strong>Siège social :</strong> 25 Avenue Montaigne, 75008 Paris</p>
+          <p><strong>Téléphone :</strong> +33 1 23 45 67 89</p>
+          <p><strong>Email :</strong> contact@luxurytime.com</p>
+          <p><strong>Capital social :</strong> 150 000 €</p>
+          <p><strong>RCS :</strong> Paris 123 456 789</p>
+          <p><strong>Directeur de publication :</strong> Jean Dupont</p>
+        </div>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Hébergement</h2>
+        <div class="company-info">
+          <p><strong>Hébergeur :</strong> OVH SAS</p>
+          <p><strong>Adresse :</strong> 2 rue Kellermann - 59100 Roubaix - France</p>
+          <p><strong>Téléphone :</strong> +33 9 72 10 10 07</p>
+        </div>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Propriété Intellectuelle</h2>
+        <p class="legal-text">L'ensemble des éléments du site LuxuryTime (textes, images, logos, marques, etc.) sont protégés par les lois sur la propriété intellectuelle. Toute reproduction sans autorisation est strictement interdite.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Données Personnelles</h2>
+        <p class="legal-text">Les données collectées sur ce site font l'objet d'un traitement destiné à gérer les commandes et la relation client. Conformément à la loi "Informatique et Libertés", vous disposez d'un droit d'accès, de rectification et de suppression de vos données.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Cookies</h2>
+        <p class="legal-text">Notre site utilise des cookies pour améliorer l'expérience utilisateur. Vous pouvez les désactiver dans les paramètres de votre navigateur.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>LuxuryTime</h3>
+          <p>Experts en montres de luxe depuis 1985.</p>
+        </div>
+        <div class="footer-column">
+          <h3>Informations</h3>
+          <ul>
+            <li><a href="{% url 'CGV' %}">Conditions Générales</a></li>
+            <li><a href="{% url 'mentions-legales' %}">Mentions Légales</a></li>
+            <li><a href="{% url 'confidentialite' %}">Confidentialité</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contact</h3>
+          <p>25 Avenue Montaigne<br>75008 Paris<br>contact@luxurytime.com</p>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; {% now "Y" %} LuxuryTime. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

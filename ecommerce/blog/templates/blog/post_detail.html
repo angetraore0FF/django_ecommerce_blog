@@ -1,0 +1,585 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxuryTime - {{ post.title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --gold-color: #d4af37;
+            --light-gray: #f8f8f8;
+            --dark-gray: #333;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            background-color: white;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        /* Header */
+        .blog-header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 25px;
+        }
+        
+        .main-nav a {
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .main-nav a.active,
+        .main-nav a:hover {
+            color: var(--gold-color);
+        }
+        
+        /* Article Detail */
+        .article-container {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        
+        .article-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .article-category {
+            display: inline-block;
+            background: var(--gold-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .article-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin: 0 0 20px;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+        
+        .article-image {
+            margin: 0 auto 40px;
+        }
+        
+        .article-image img {
+            width: 100%;
+            border-radius: 8px;
+            max-height: 500px;
+            object-fit: cover;
+        }
+        
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .article-content p {
+            margin-bottom: 25px;
+        }
+        
+        .article-footer {
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .back-to-blog {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--gold-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .back-to-blog:hover {
+            background-color: #c9a227;
+        }
+        
+        /* Footer */
+        .blog-footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-color);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-col p, 
+        .footer-col address {
+            color: #bbb;
+            font-style: normal;
+            line-height: 1.6;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-col a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col a:hover {
+            color: var(--gold-color);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .article-header h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .welcome-message {
+            margin-left: 20px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .logout-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            font: inherit;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 20px;
+        }
+        
+        .logout-btn:hover {
+            color: #d4af37;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-icon {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #d4af37;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        /* Commentaires */
+        .comments-section {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #eee;
+        }
+
+        .comment {
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .comment-date {
+            font-style: italic;
+        }
+
+        .comment-actions a {
+            margin-left: 10px;
+            font-size: 0.8em;
+        }
+
+        .btn-edit {
+            color: #d4af37;
+        }
+
+        .btn-delete {
+            color: #dc3545;
+        }
+
+        .add-comment {
+            margin-bottom: 30px;
+        }
+
+        .add-comment textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Likes */
+        .comment-footer {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .like-btn {
+            color: var(--gold-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .like-btn:hover {
+            opacity: 0.8;
+        }
+
+        .like-count {
+            font-size: 0.9em;
+            color: #666;
+            margin-left: 5px;
+        }
+
+        /* Bouton Envoyer */
+        .btn-primary {
+            background-color: var(--gold-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #c9a227;
+        }
+    </style>
+</head>
+<body>
+    <header class="alt-header">
+        <div class="container">
+            <div class="header-top">
+                <a href="{% url 'home' %}" class="logo">
+                    <img src="{% static 'images/logo.png' %}" alt="LuxuryTime" width="180">
+                </a>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="{% url 'home' %}">Accueil</a></li>
+                        <li><a href="{% url 'montres' %}">Montres</a></li>
+                        <li><a href="{% url 'blog:post_list' %}">Blog</a></li>
+                        <li><a href="{% url 'Marques' %}">Marques</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    {% if user.is_authenticated %}
+                        {% now "H" as current_hour %}
+                        {% if current_hour|add:"0" >= 18 or current_hour|add:"0" < 6 %}
+                            <span class="welcome-message">Bonsoir, {{ user.username }}</span>
+                        {% else %}
+                            <span class="welcome-message">Bonjour, {{ user.username }}</span>
+                        {% endif %}
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn">Déconnexion</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="login-btn">Connexion</a>
+                    {% endif %}
+                    <a href="{% url 'voir_panier' %}" class="cart-icon">
+                        <span class="cart-count">
+                            {% if request.user.is_authenticated %}
+                                {{ request.user.panier.items.count }}
+                            {% else %}
+                                0
+                            {% endif %}
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="article-container">
+        <div class="article-header">
+            <span class="article-category">{{ post.category.name }}</span>
+            <h1>{{ post.title }}</h1>
+            <div class="article-meta">
+                <span class="article-date">Publié le {{ post.published_date|date:"d F Y" }}</span>
+                <span class="article-author">Par {{ post.author.username }}</span>
+            </div>
+            {% if post.image %}
+            <div class="article-image">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="article-content">
+            {{ post.content|linebreaks }}
+        </div>
+
+        <!-- Section commentaires -->
+        <div class="comments-section">
+            <h3>Commentaires ({{ comments.count }})</h3>
+            
+            {% if user.is_authenticated %}
+            <div class="add-comment">
+                <h4>Ajouter un commentaire</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit" class="btn-primary">Envoyer</button>
+                </form>
+            </div>
+            {% else %}
+            <p><a href="{% url 'login' %}?next={{ request.path }}">Connectez-vous</a> pour commenter.</p>
+            {% endif %}
+            
+            <div class="comments-list">
+                {% for comment in comments %}
+                <div class="comment" id="comment-{{ comment.id }}">
+                    <div class="comment-header">
+                        <strong>{{ comment.author.username }}</strong>
+                        <span class="comment-date">{{ comment.created_date|date:"d F Y à H:i" }}</span>
+                        
+                        {% if user.is_staff %}  <!-- Seulement pour l'admin -->
+                        <div class="comment-actions">
+                            <a href="{% url 'blog:edit_comment' comment.id %}" class="btn-edit">Modifier</a>
+                            <a href="{% url 'blog:delete_comment' comment.id %}" class="btn-delete">Supprimer</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="comment-content">{{ comment.content }}</div>
+                    <div class="comment-footer">
+                        {% if user.is_authenticated %}
+                        <form action="{% url 'blog:like_comment' comment.id %}" method="post" class="like-form">
+                            {% csrf_token %}
+                            <button type="submit" class="like-btn">
+                                {% if user in comment.likes.all %}
+                                    ❤️
+                                {% else %}
+                                    🤍
+                                {% endif %}
+                                <span class="like-count">{{ comment.likes.count }}</span>
+                            </button>
+                        </form>
+                        {% else %}
+                        <span class="like-count">❤️ {{ comment.likes.count }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <p>Soyez le premier à commenter cet article !</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="article-footer">
+            <a href="{% url 'blog:post_list' %}" class="back-to-blog">Retour au blog</a>
+        </div>
+    </main>
+
+    <footer class="blog-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>LuxuryTime</h4>
+                    <p>Experts en montres de luxe depuis 1985. Authenticité garantie.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Boutique</h4>
+                    <ul>
+                        <li><a href="{% url 'montres' %}">Montres</a></li>
+                        <li><a href="#">Accessoires</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Informations</h3>
+                    <ul>
+                        <li><a href="{% url 'CGV' %}">Conditions Générales</a></li>
+                        <li><a href="{% url 'mentions-legales' %}">Mentions Légales</a></li>
+                        <li><a href="{% url 'confidentialite' %}">Confidentialité</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <address>
+                        12 Avenue Montaigne<br>
+                        75008 Paris, France<br>
+                        contact@luxurytime.com
+                    </address>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 LuxuryTime. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Highlight current page in navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.main-nav a').forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // AJAX pour les likes
+            document.querySelectorAll('.like-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const form = this;
+                    const url = form.getAttribute('action');
+                    const likeBtn = form.querySelector('.like-btn');
+                    const likeCount = form.querySelector('.like-count');
+                    
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.liked) {
+                            likeBtn.innerHTML = '❤️ <span class="like-count">' + data.total_likes + '</span>';
+                        } else {
+                            likeBtn.innerHTML = '🤍 <span class="like-count">' + data.total_likes + '</span>';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

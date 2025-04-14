@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Connexion - LuxuryTime</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --gold-color: #d4af37;
+            --light-gray: #f8f8f8;
+            --dark-gray: #333;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('{% static "images/bg-pattern.jpg" %}');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        .auth-container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 40px auto;
+            border-top: 4px solid var(--gold-color);
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-gray);
+        }
+        
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--gold-color);
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--gold-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #c9a227;
+        }
+        
+        .links {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .links a {
+            color: var(--gold-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .links a:hover {
+            color: #c9a227;
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="logo">
+            <img src="{% static 'images/logo.png' %}" alt="LuxuryTime">
+        </div>
+        <h1>Connexion</h1>
+        {% if form.errors %}
+            <div class="error-message">
+                <p>E-mail ou mot de passe incorrect.</p>
+            </div>
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">E-mail</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">Mot de passe</label>
+                {{ form.password }}
+            </div>
+            <button type="submit">Se connecter</button>
+        </form>
+        <div class="links">
+            <p><a href="{% url 'password_reset' %}">Mot de passe oublié ?</a> | <a href="{% url 'inscription' %}">Créer un compte</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,355 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>LuxuryTime - Conditions Générales de Vente</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #333;
+      line-height: 1.6;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Header */
+    .alt-header {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+
+    .logo img {
+      height: auto;
+      width: 180px;
+    }
+
+    .main-nav ul {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+    }
+
+    .main-nav a {
+      font-weight: 500;
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: color 0.3s;
+      font-size: 0.95rem;
+      position: relative;
+      padding: 5px 0;
+    }
+
+    .main-nav a.active,
+    .main-nav a:hover {
+      color: #d4af37;
+    }
+
+    .main-nav a.active:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #d4af37;
+    }
+
+    .user-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 60px 0 20px;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-column h3 {
+      font-family: 'Playfair Display', serif;
+      color: #d4af37;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    .footer-column p, 
+    .footer-column address {
+      color: #bbb;
+      font-style: normal;
+      line-height: 1.8;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column li {
+      margin-bottom: 10px;
+    }
+
+    .footer-column a {
+      color: #ddd;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-column a:hover {
+      color: #d4af37;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    /* Styles spécifiques CGV */
+    .legal-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: white;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    
+    .legal-title {
+      font-family: 'Playfair Display', serif;
+      color: #1a1a1a;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2rem;
+      border-bottom: 2px solid #d4af37;
+      padding-bottom: 10px;
+    }
+    
+    .legal-section {
+      margin-bottom: 25px;
+    }
+    
+    .section-title {
+      color: #d4af37;
+      margin: 20px 0 10px;
+      font-size: 1.3rem;
+    }
+    
+    .legal-text {
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+    
+    .legal-list {
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+    
+    .legal-list li {
+      margin-bottom: 8px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .main-nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+      
+      .legal-container {
+        padding: 20px;
+      }
+      
+      .legal-title {
+        font-size: 1.6rem;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="alt-header">
+    <div class="container">
+      <div class="header-top">
+        <a href="{% url 'home' %}" class="logo">
+          <img src="{% static 'images/logo.png' %}" alt="LuxuryTime">
+        </a>
+        
+        <nav class="main-nav">
+          <ul>
+            <li><a href="{% url 'home' %}" {% if request.path == '/' %}class="active"{% endif %}>Accueil</a></li>
+            <li><a href="{% url 'montres' %}" {% if request.path == '/montres/' %}class="active"{% endif %}>Montres</a></li>
+            <li><a href="{% url 'blog:post_list' %}" {% if 'blog' in request.path %}class="active"{% endif %}>Blog</a></li>
+            <li><a href="{% url 'Marques' %}" {% if request.path == '/Marques/' %}class="active"{% endif %}>Marques</a></li>
+            <li><a href="{% url 'contact' %}" {% if request.path == '/contact/' %}class="active"{% endif %}>Contact</a></li>
+            <li><a href="{% url 'accessoire' %}" {% if request.path == '/accessoire/' %}class="active"{% endif %}>Accessoires</a></li>
+            <li><a href="{% url 'historique_commandes' %}" {% if request.path == '/historique_commandes/' %}class="active"{% endif %}>Historique</a></li>
+            <li><a href="{% url 'mes_favoris' %}" {% if request.path == '/mes_favoris/' %}class="active"{% endif %}>Favoris</a></li>
+          </ul>
+        </nav>
+        
+        <div class="user-actions">
+          {% if user.is_authenticated %}
+            <span class="welcome-message">Bonjour, {{ user.username }}</span>
+            <a href="{% url 'logout' %}" class="logout-btn">Déconnexion</a>
+          {% else %}
+            <a href="{% url 'login' %}" class="login-btn">Connexion</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="legal-container">
+      <h1 class="legal-title">Conditions Générales de Vente</h1>
+      
+      <div class="legal-section">
+        <p class="legal-text">Les présentes conditions générales de vente (CGV) s'appliquent à toutes les commandes passées sur le site LuxuryTime.com.</p>
+      </div>
+      
+<main>
+    <div class="legal-container">
+      <h1 class="legal-title">Conditions Générales de Vente</h1>
+      
+      <div class="legal-section">
+        <p class="legal-text">Les présentes conditions générales de vente (CGV) s'appliquent à toutes les commandes passées sur le site LuxuryTime.com.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Article 1 - Objet</h2>
+        <p class="legal-text">Les présentes CGV régissent les ventes de montres et accessoires par la société LuxuryTime.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Article 2 - Prix</h2>
+        <p class="legal-text">Les prix sont indiqués en euros toutes taxes comprises (TVA incluse). LuxuryTime se réserve le droit de modifier ses prix à tout moment.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Article 3 - Commandes</h2>
+        <p class="legal-text">Pour passer commande, le Client doit sélectionner les produits et valider son panier. La vente sera considérée comme définitive après paiement.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Article 4 - Paiement</h2>
+        <p class="legal-text">Le paiement s'effectue par carte bancaire ou PayPal. Le débit intervient au moment de la commande.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Article 5 - Livraison</h2>
+        <p class="legal-text">Les délais de livraison sont indicatifs et varient selon le pays de destination. En cas de retard, LuxuryTime informera le Client.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Article 6 - Droit de rétractation</h2>
+        <p class="legal-text">Conformément à la loi, le Client dispose d'un délai de 14 jours pour retourner le produit à ses frais et être remboursé.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Article 7 - Garanties</h2>
+        <p class="legal-text">Tous nos produits bénéficient de la garantie légale de conformité (2 ans) et contre les vices cachés (2 ans).</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Article 8 - Données personnelles</h2>
+        <p class="legal-text">Les données collectées sont traitées conformément à notre Politique de Confidentialité.</p>
+      </div>
+      
+      <div class="legal-section">
+        <h2 class="section-title">Article 9 - Litiges</h2>
+        <p class="legal-text">En cas de litige, le Client peut recourir à un médiateur de la consommation.</p>
+      </div>
+    </div>
+  </main>
+      
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>LuxuryTime</h3>
+          <p>Experts en montres de luxe depuis 1985. Authenticité garantie.</p>
+        </div>
+        <div class="footer-column">
+          <h3>Boutique</h3>
+          <ul>
+            <li><a href="{% url 'montres' %}">Montres</a></li>
+            <li><a href="{% url 'accessoire' %}">Accessoires</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Informations</h3>
+          <ul>
+            <li><a href="{% url 'CGV' %}">CGV</a></li>
+            <li><a href="{% url 'mentions-legales' %}">Mentions légales</a></li>
+            <li><a href="{% url 'confidentialite' %}">Confidentialité</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2023 LuxuryTime. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+
+
+
+
+
+
+
+

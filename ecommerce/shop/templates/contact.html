@@ -1,0 +1,212 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>LuxuryTime - Contact</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/home-alt.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Styles spécifiques à la page contact */
+    .contact-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+    
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    
+    .contact-info {
+      background: #f9f9f9;
+      padding: 30px;
+      border-radius: 8px;
+    }
+    
+    .contact-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    
+    .contact-method {
+      margin-bottom: 25px;
+    }
+    
+    .contact-method h3 {
+      color: #d4af37;
+      margin-bottom: 10px;
+    }
+    
+    .contact-form .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .contact-form .form-control {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    .contact-form textarea.form-control {
+      min-height: 150px;
+    }
+    
+    .btn-submit {
+      background-color: #d4af37;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+    }
+    
+    .btn-submit:hover {
+      background-color: #c9a227;
+    }
+    
+    .map-container {
+      margin-top: 40px;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .success-message {
+      color: #28a745;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<body class="home-alt">
+  <!-- Header -->
+  {% include 'header.html' %}
+  <!-- Contenu principal -->
+  <main class="contact-container">
+    <h1 class="contact-title">Contactez-nous</h1>
+    
+    <div class="contact-grid">
+      <!-- Formulaire de contact avec Web3Forms -->
+      <section class="contact-form">
+        <form action="https://api.web3forms.com/submit" method="POST" id="contact-form" class="web3form">
+          <input type="hidden" name="access_key" value="047be7c8-e2ab-4204-8dfb-1d3aed0677a2">
+          <input type="hidden" name="redirect" value="https://votredomaine.com/merci">
+          <input type="hidden" name="from_name" value="LuxuryTime Contact">
+          <input type="checkbox" name="botcheck" style="display: none;">
+          
+          <div class="form-group">
+            <input type="text" class="form-control" name="name" placeholder="Votre nom complet" required>
+          </div>
+          
+          <div class="form-group">
+            <input type="email" class="form-control" name="email" placeholder="Votre email" required>
+          </div>
+          
+          <div class="form-group">
+            <input type="text" class="form-control" name="subject" placeholder="Sujet" required>
+          </div>
+          
+          <div class="form-group">
+            <textarea class="form-control" name="message" placeholder="Votre message" required></textarea>
+          </div>
+          
+          <button type="submit" class="btn-submit">Envoyer le message</button>
+          
+          <div class="success-message" id="success-message">
+            Merci ! Votre message a bien été envoyé. Nous vous répondrons dans les plus brefs délais.
+          </div>
+        </form>
+      </section>
+      
+      <!-- Informations de contact -->
+      <section class="contact-info">
+        <div class="contact-method">
+          <h3>Adresse</h3>
+          <p>12 Avenue Montaigne<br>75008 Paris, France</p>
+        </div>
+        
+        <div class="contact-method">
+          <h3>Téléphone</h3>
+          <p>+33 1 23 45 67 89</p>
+        </div>
+        
+        <div class="contact-method">
+          <h3>Email</h3>
+          <p>contact@luxurytime.com</p>
+        </div>
+        
+        <div class="contact-method">
+          <h3>Horaires</h3>
+          <p>Lundi - Vendredi : 10h - 19h<br>
+          Samedi : 10h - 18h<br>
+          Dimanche : Fermé</p>
+        </div>
+      </section>
+    </div>
+    
+    <!-- Carte Google Maps -->
+    <div class="map-container">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9916256937595!2d2.292292615509614!3d48.85837007928746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sTour%20Eiffel!5e0!3m2!1sfr!2sfr!4v1623257426921!5m2!1sfr!2sfr" 
+              width="100%" 
+              height="400" 
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy">
+      </iframe>
+    </div>
+  </main>
+
+  <!-- Footer corrigé -->
+
+{% include 'footer.html' %}
+
+
+  <!-- JS -->
+  <script src="{% static 'js/home-alt.js' %}"></script>
+  
+  <script>
+    // Gestion du formulaire avec Web3Forms
+    const form = document.getElementById('contact-form');
+    const successMessage = document.getElementById('success-message');
+    
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Envoi du formulaire
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Afficher le message de succès
+          form.style.display = 'none';
+          successMessage.style.display = 'block';
+          
+          // Réinitialiser le formulaire
+          form.reset();
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    });
+  </script>
+</body>
+</html>

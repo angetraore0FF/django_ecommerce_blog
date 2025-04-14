@@ -1,0 +1,372 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>LuxuryTime - Historique des Commandes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --gold-color: #d4af37;
+            --light-gray: #f8f8f8;
+            --dark-gray: #333;
+            --white: #ffffff;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+        }
+        
+        /* Header */
+        .alt-header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 25px;
+        }
+        
+        .main-nav a {
+            font-weight: 500;
+            padding: 5px 0;
+            position: relative;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .main-nav a.active,
+        .main-nav a:hover {
+            color: var(--gold-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .welcome-message {
+            margin-right: 10px;
+            font-weight: 500;
+        }
+        
+        .logout-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font: inherit;
+            color: inherit;
+        }
+        
+        .logout-btn:hover {
+            color: var(--gold-color);
+        }
+        
+        .cart-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--gold-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+        
+        /* Historique des commandes */
+        .commandes-container {
+            margin: 40px 0;
+        }
+        
+        .commandes-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .commandes-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background-color: var(--gold-color);
+        }
+        
+        .commande-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .commande-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background-color: var(--light-gray);
+            border-bottom: 1px solid #eee;
+        }
+        
+        .commande-id {
+            font-weight: 600;
+        }
+        
+        .commande-date {
+            color: #666;
+        }
+        
+        .commande-statut {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .statut-en_attente {
+            background-color: #ffc107;
+            color: var(--primary-color);
+        }
+        
+        .statut-paye {
+            background-color: #17a2b8;
+            color: white;
+        }
+        
+        .statut-expediee {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .statut-livree {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .statut-annulee {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .commande-montant {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .commande-details {
+            padding: 20px;
+        }
+        
+        .commande-lignes {
+            margin-top: 15px;
+        }
+        
+        .ligne-commande {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .ligne-commande:last-child {
+            border-bottom: none;
+        }
+        
+        .ligne-produit {
+            flex: 2;
+        }
+        
+        .ligne-quantite {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .ligne-prix {
+            flex: 1;
+            text-align: right;
+            font-weight: 500;
+        }
+        
+        .commande-total {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .empty-commandes {
+            text-align: center;
+            padding: 50px 0;
+        }
+        
+        .empty-commandes p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .btn-explore {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-explore:hover {
+            background-color: var(--gold-color);
+        }
+        
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .commande-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .commande-statut {
+                align-self: flex-start;
+            }
+        }
+    </style>
+</head>
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<body>
+    {% include 'header.html' %}
+
+    <main class="container">
+        <div class="commandes-container">
+            <h1 class="commandes-title">Mon Historique de Commandes</h1>
+            
+            {% if commandes %}
+                {% for commande in commandes %}
+                <div class="commande-card">
+                    <div class="commande-header">
+                        <div>
+                            <span class="commande-id">Commande #{{ commande.id }}</span>
+                            <span class="commande-date"> - {{ commande.date_commande|date:"d/m/Y H:i" }}</span>
+                        </div>
+                        <span class="commande-statut statut-{{ commande.statut|lower }}">{{ commande.get_statut_display }}</span>
+                    </div>
+                    
+                    <div class="commande-details">
+                        <div class="commande-lignes">
+                            {% for ligne in commande.lignes.all %}
+                            <div class="ligne-commande">
+                                <div class="ligne-produit">
+                                    {% if ligne.montre %}
+                                        {{ ligne.montre.nom }}
+                                    {% else %}
+                                        {{ ligne.accessoire.nom }}
+                                    {% endif %}
+                                </div>
+                                <div class="ligne-quantite">x {{ ligne.quantite }}</div>
+                                <div class="ligne-prix">{{ ligne.total_ligne }} €</div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="commande-total">
+                            Total : {{ commande.montant_total }} €
+                            {% if commande.code_promo %}
+                                <span style="font-size: 0.9rem; margin-left: 10px; color: #28a745;">
+                                    (Code promo: {{ commande.code_promo.code }})
+                                </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <div class="empty-commandes">
+                <p>Vous n'avez pas encore passé de commande.</p>
+                <a href="{% url 'montres' %}" class="btn-explore">Découvrir nos collections</a>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation pour l'affichage des commandes
+            const commandes = document.querySelectorAll('.commande-card');
+            commandes.forEach((commande, index) => {
+                commande.style.opacity = '0';
+                commande.style.transform = 'translateY(20px)';
+                commande.style.transition = `opacity 0.5s ${index * 0.1}s, transform 0.5s ${index * 0.1}s`;
+                
+                setTimeout(() => {
+                    commande.style.opacity = '1';
+                    commande.style.transform = 'translateY(0)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

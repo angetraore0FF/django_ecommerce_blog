@@ -1,0 +1,47 @@
+{% load static %}
+<header class="alt-header">
+    <div class="container">
+        <div class="header-top">
+            <a href="{% url 'home' %}" class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="LuxuryTime" width="180">
+            </a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{% url 'home' %}" {% if request.path == '/' %}class="active"{% endif %}>Accueil</a></li>
+                    <li><a href="{% url 'montres' %}" {% if request.path == '/montres/' %}class="active"{% endif %}>Montres</a></li>
+                    <li><a href="{% url 'blog:post_list' %}" {% if 'blog' in request.path %}class="active"{% endif %}>Blog</a></li>
+                    <li><a href="{% url 'Marques' %}" {% if request.path == '/Marques/' %}class="active"{% endif %}>Marques</a></li>
+                    <li><a href="{% url 'contact' %}" {% if request.path == '/contact/' %}class="active"{% endif %}>Contact</a></li>
+                    <li><a href="{% url 'accessoire' %}" {% if request.path == '/accessoire/' %}class="active"{% endif %}>Accessoires</a></li>
+                    <li><a href="{% url 'historique_commandes' %}" {% if request.path == '/historique_commandes/' %}class="active"{% endif %}>Historique</a></li>
+                    <li><a href="{% url 'mes_favoris' %}" {% if request.path == '/mes_favoris/' %}class="active"{% endif %}>Favoris</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                {% if user.is_authenticated %}
+                    {% now "H" as current_hour %}
+                    {% if current_hour|add:"0" >= 18 or current_hour|add:"0" < 6 %}
+                        <span class="welcome-message">Bonsoir, {{ user.username }}</span>
+                    {% else %}
+                        <span class="welcome-message">Bonjour, {{ user.username }}</span>
+                    {% endif %}
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-btn">Déconnexion</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="login-btn">Connexion</a>
+                {% endif %}
+                <a href="{% url 'voir_panier' %}" class="cart-icon">
+                    <span class="cart-count">
+                        {% if request.user.is_authenticated %}
+                            {{ request.user.panier.items.count }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>

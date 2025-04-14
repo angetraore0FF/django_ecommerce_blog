@@ -1,0 +1,532 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxuryTime - Accessoires Haut de Gamme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --gold-color: #d4af37;
+            --light-gray: #f8f8f8;
+            --dark-gray: #333;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+        }
+        
+        /* Header */
+        .alt-header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+        
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 25px;
+        }
+        
+        .main-nav a {
+            font-weight: 500;
+            padding: 2px 0;
+            position: relative;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .main-nav a.active,
+        .main-nav a:hover {
+            color: var(--gold-color);
+        }
+        
+        .main-nav a.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--gold-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .login-btn {
+            padding: 8px 10px;
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .login-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .welcome-message {
+            margin-right: 10px;
+            font-weight: 500;
+        }
+        
+        .logout-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font: inherit;
+            color: inherit;
+        }
+        
+        .logout-btn:hover {
+            color: var(--gold-color);
+        }
+        
+        .cart-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--gold-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+        }
+
+        /* Hero Section */
+        .accessoires-hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{% static "images/accessoires-bg.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .accessoires-hero h1 {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .accessoires-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Catégories */
+        .categories {
+            padding: 60px 0;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .category-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .category-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .category-info {
+            padding: 20px;
+            background: white;
+        }
+        
+        .category-info h3 {
+            margin: 0 0 10px 0;
+        }
+        
+        .btn-explore {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--gold-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-explore:hover {
+            background-color: #c9a227;
+            transform: translateY(-2px);
+        }
+        
+        /* Produits phares */
+        .featured-accessories {
+            padding: 60px 0;
+            background-color: var(--light-gray);
+        }
+        
+        .accessories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .accessory-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .accessory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .accessory-image {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .accessory-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .accessory-card:hover .accessory-image img {
+            transform: scale(1.05);
+        }
+        
+        .accessory-info {
+            padding: 20px;
+        }
+        
+        .accessory-marque {
+            color: var(--gold-color);
+            font-weight: 500;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .accessory-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .btn-add-to-cart {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .btn-add-to-cart:hover {
+            background-color: var(--gold-color);
+        }
+
+        .btn-add-to-cart:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .in-stock {
+            color: #28a745;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .out-of-stock {
+            color: #dc3545;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Footer */
+        .site-footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-column h3 {
+            color: var(--gold-color);
+            margin-bottom: 20px;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-column li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--gold-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .accessoires-hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .accessories-grid,
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<body>
+    {% include 'header.html' %}
+    <section class="accessoires-hero">
+        <div class="container">
+            <h1>Accessoires Haut de Gamme</h1>
+            <p>Complétez votre style avec nos accessoires exclusifs, conçus pour sublimer vos montres de luxe</p>
+            <a href="#categories" class="btn-explore">Découvrir</a>
+        </div>
+    </section>
+
+    <section id="categories" class="categories">
+        <div class="container">
+            <h2>Nos Catégories</h2>
+            <p>Sélectionnez une catégorie pour découvrir nos accessoires premium</p>
+            
+            <div class="categories-grid">
+                {% for categorie in categories %}
+                <div class="category-card">
+                    <div class="category-image" style="background-image: url('{{ categorie.image.url }}')"></div>
+                    <div class="category-info">
+                        <h3>{{ categorie.nom }}</h3>
+                        <p>{{ categorie.description }}</p>
+                        <a href="#{{ categorie.nom|slugify }}" class="btn-explore">Voir la collection</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="featured-accessories">
+        <div class="container">
+            <h2>Accessoires Phares</h2>
+            <p>Découvrez nos accessoires les plus prisés</p>
+            
+            <div class="accessories-grid">
+                {% for accessoire in accessoires_phares %}
+                <div class="accessory-card">
+                    <div class="accessory-image">
+                        <img src="{{ accessoire.image.url }}" alt="{{ accessoire.nom }}">
+                    </div>
+                    <div class="accessory-info">
+                        <span class="accessory-marque">{{ accessoire.marque }}</span>
+                        <h3>{{ accessoire.nom }}</h3>
+                        <div class="accessory-price">{{ accessoire.prix }} €</div>
+                        {% if accessoire.en_stock %}
+                            <span class="in-stock">En stock</span>
+                            <form method="post" action="{% url 'ajouter_accessoire_panier' accessoire.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-add-to-cart">Ajouter au panier</button>
+                            </form>
+                        {% else %}
+                            <span class="out-of-stock">Rupture de stock</span>
+                            <button class="btn-add-to-cart" disabled>Indisponible</button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% for categorie in categories %}
+    <section id="{{ categorie.nom|slugify }}" class="categories">
+        <div class="container">
+            <h2>{{ categorie.nom }}</h2>
+            <p>Découvrez notre sélection exclusive</p>
+            
+            <div class="accessories-grid">
+                {% for accessoire in categorie.accessoires.all %}
+                <div class="accessory-card">
+                    <div class="accessory-image">
+                        <img src="{{ accessoire.image.url }}" alt="{{ accessoire.nom }}">
+                    </div>
+                    <div class="accessory-info">
+                        <span class="accessory-marque">{{ accessoire.marque }}</span>
+                        <h3>{{ accessoire.nom }}</h3>
+                        <div class="accessory-price">{{ accessoire.prix }} €</div>
+                        {% if accessoire.en_stock %}
+                            <span class="in-stock">En stock</span>
+                            <form method="post" action="{% url 'ajouter_accessoire_panier' accessoire.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-add-to-cart">Ajouter au panier</button>
+                            </form>
+                        {% else %}
+                            <span class="out-of-stock">Rupture de stock</span>
+                            <button class="btn-add-to-cart" disabled>Indisponible</button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <p>Aucun accessoire disponible dans cette catégorie pour le moment.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endfor %}
+
+    {% include 'footer.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation des cartes
+            const animateCards = function() {
+                const cards = document.querySelectorAll('.category-card, .accessory-card');
+                
+                cards.forEach((card, index) => {
+                    const cardPosition = card.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if(cardPosition < screenPosition) {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+            
+            // Initialiser l'opacité
+            const cards = document.querySelectorAll('.category-card, .accessory-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `opacity 0.5s ${index * 0.1}s, transform 0.5s ${index * 0.1}s`;
+            });
+            
+            // Démarrer l'animation
+            setTimeout(animateCards, 300);
+            
+            // Écouter le scroll
+            window.addEventListener('scroll', animateCards);
+            
+            // Gestion de l'ajout au panier
+            const addToCartButtons = document.querySelectorAll('.btn-add-to-cart:not(:disabled)');
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const button = this;
+                    button.textContent = 'Ajouté !';
+                    button.style.backgroundColor = '#28a745';
+                    
+                    setTimeout(() => {
+                        button.textContent = 'Ajouter au panier';
+                        button.style.backgroundColor = 'var(--primary-color)';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

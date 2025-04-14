@@ -1,0 +1,468 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <title>LuxuryTime - Finalisation de commande</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'css/home-alt.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Main container styles */
+    .checkout-container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 0 20px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    
+    /* Grid layout */
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 50px;
+    }
+    
+    /* Form section */
+    .checkout-form {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    /* Summary section */
+    .checkout-summary {
+      background: #f9f9f9;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 20px;
+    }
+    
+    /* Titles */
+    .checkout-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      color: #333;
+      text-align: center;
+    }
+    
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #333;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    
+    /* Modern form control styles */
+    .form-control {
+      width: 100%;
+      padding: 16px 18px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      color: #333;
+      background-color: #fefefe;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      outline: none;
+    }
+
+    .form-control:hover {
+      border-color: #bbb;
+      background-color: #fff;
+    }
+
+    .form-control:focus {
+      border-color: #d4af37;
+      background-color: #fff;
+      box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+    }
+
+    .form-control::placeholder {
+      color: #bbb;
+      font-weight: 400;
+      font-size: 0.95rem;
+    }
+
+    textarea.form-control {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 30px;
+    }
+
+    /* Labels styles */
+    .checkout-form label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #2c2c2c;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+      transition: all 0.3s ease;
+      position: relative;
+      padding-left: 2px;
+    }
+
+    .checkout-form label:after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background: #d4af37;
+      transition: width 0.3s ease;
+    }
+
+    .checkout-form label:hover {
+      color: #d4af37;
+    }
+
+    .checkout-form label:hover:after {
+      width: 50px;
+    }
+
+    .checkout-form .form-group:focus-within label {
+      color: #d4af37;
+    }
+    
+    /* Style pour les inputs de type select */
+    select.form-control {
+      appearance: auto;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+      background-size: 12px;
+      padding-right: 35px;
+    }
+
+    /* Style pour les inputs dans le formulaire de code promo */
+    #promo-code {
+      padding: 12px 15px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border-right: none;
+    }
+
+    /* Style pour les inputs avec erreur */
+    .form-control.error-input {
+      border-color: #e74c3c;
+      background-color: #fff9f9;
+    }
+
+    .form-control.error-input:focus {
+      box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15);
+    }
+    
+    /* Buttons */
+    .btn-primary {
+      background-color: #d4af37;
+      color: white;
+      border: none;
+      padding: 14px 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn-primary:hover {
+      background-color: #c5a030;
+    }
+    
+    /* Order items */
+    .order-summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .order-total {
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-top: 25px;
+      color: #333;
+    }
+    
+    /* Promo code section */
+    .promo-code-section {
+      margin-bottom: 25px;
+      padding: 20px;
+      background: #f5f5f5;
+      border-radius: 5px;
+    }
+    
+    .btn-apply {
+      background: #d4af37;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+    
+    .btn-apply:hover {
+      background: #c5a030;
+    }
+    
+    /* Alerts */
+    .alert {
+      padding: 12px 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+    
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .remove-promo {
+      color: #721c24;
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    
+    /* Discount styling */
+    .discount {
+      color: #28a745;
+      font-weight: 500;
+    }
+    
+    .original-price {
+      text-decoration: line-through;
+      color: #999;
+      margin-right: 10px;
+    }
+
+    .alert-warning {
+      background: #fff3cd;
+      color: #856404;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 20px 0;
+      border: 1px solid #ffeeba;
+    }
+  
+    .alert-warning a {
+      color: #856404;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+
+    /* Error messages */
+    .error {
+      color: #dc3545;
+      font-size: 0.85rem;
+      margin-top: 8px;
+    }
+
+    small.help-text {
+      color: #6c757d;
+      font-size: 0.85rem;
+      display: block;
+      margin-top: 8px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .checkout-summary {
+        position: static;
+      }
+    }
+
+    /* Masquer le champ méthode de paiement */
+    #id_methode_paiement {
+      display: none;
+    }
+
+    /* Masquer aussi le label associé */
+    label[for="id_methode_paiement"] {
+      display: none;
+    }
+  </style>
+</head>
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
+<body class="home-alt">
+  <!-- Header -->
+  {% include 'header.html' %}
+
+  <!-- Main content -->
+  <main class="checkout-container">
+    <h1 class="checkout-title">Finalisation de votre commande</h1>
+    
+    <div class="checkout-grid">
+      <!-- Form section -->
+      <section class="checkout-form">
+        <h2>Informations de livraison</h2>
+        <form method="post">
+          {% csrf_token %}
+                    
+          {% if form.non_field_errors %}
+          <div class="alert alert-warning">
+            {% for error in form.non_field_errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+          {% endif %}
+          
+          {% for field in form %}
+          <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {% if field.errors %}
+              <div class="error">
+                {% for error in field.errors %}
+                  {{ error }}
+                {% endfor %}
+              </div>
+            {% endif %}
+            {% if field.help_text %}
+              <small class="help-text">{{ field.help_text }}</small>
+            {% endif %}
+          </div>
+          {% endfor %}
+          
+          <button type="submit" class="btn-primary">Confirmer la commande</button>
+        </form>
+      </section>
+      
+      <!-- Order summary -->
+      <section class="checkout-summary">
+        <h2>Votre commande</h2>
+        
+        <!-- Promo code section -->
+        <div class="promo-code-section">
+          <form id="promo-code-form" method="post" action="{% url 'appliquer_code_promo' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="promo-code">Code promo</label>
+              <div style="display: flex;">
+                <input type="text" class="form-control" id="promo-code" name="code" placeholder="Entrez votre code promo">
+                <button type="submit" class="btn-apply">Appliquer</button>
+              </div>
+            </div>
+          </form>
+          {% if code_promo %}
+          <div class="alert alert-success">
+            Code "{{ code_promo.code }}" appliqué: -{{ code_promo.reduction }}%
+            <a href="{% url 'supprimer_code_promo' %}" class="remove-promo">×</a>
+          </div>
+          {% endif %}
+        </div>
+        
+        <!-- Watches in cart -->
+        {% for item in items_montres %}
+        <div class="order-summary-item">
+          <div>
+            <strong>{{ item.montre.nom }}</strong>
+            <div>Quantité: {{ item.quantite }}</div>
+          </div>
+          <div>{{ item.sous_total }} €</div>
+        </div>
+        {% endfor %}
+        
+        <!-- Accessories in cart -->
+        {% for item in items_accessoires %}
+        <div class="order-summary-item">
+          <div>
+            <strong>{{ item.accessoire.nom }}</strong>
+            <div>Quantité: {{ item.quantite }}</div>
+          </div>
+          <div>{{ item.sous_total }} €</div>
+        </div>
+        {% endfor %}
+        
+        <div class="order-summary-item">
+          <div>Livraison</div>
+          <div>Gratuite</div>
+        </div>
+        
+        {% if reduction > 0 %}
+        <div class="order-summary-item discount">
+          <div>Réduction ({{ code_promo.reduction }}%)</div>
+          <div>-{{ reduction }} €</div>
+        </div>
+        {% endif %}
+        
+        <div class="order-summary-item order-total">
+          <div>Total</div>
+          <div>
+            {% if reduction > 0 %}
+              <span class="original-price">{{ panier.total }} €</span>
+              <span>{{ total_avec_reduction }} €</span>
+            {% else %}
+              {{ panier.total }} €
+            {% endif %}
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  {% include 'footer.html' %}
+
+  <script src="{% static 'js/home-alt.js' %}"></script>
+  <script>
+    document.getElementById('promo-code-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        
+        fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  </script>
+</body>
+</html>
