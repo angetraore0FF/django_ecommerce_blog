@@ -24,15 +24,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-oa=cez(6=1@6p9kwo#y=2-jz$v45a6brx=(w4$=wtq+hes63-n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    ".vercel.app", 
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'shop.apps.ShopConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -44,7 +49,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'drf_spectacular',
     'corsheaders',
-    'shop.apps.ShopConfig',
     'django_filters',
     'blog',
     'api',
@@ -149,8 +153,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Ou votre serveur SMTP
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'votre_email@gmail.com'
-EMAIL_HOST_PASSWORD = 'votre_mot_de_passe'  # Utilisez un mot de passe d'application pour Gmail
+EMAIL_HOST_USER = 'anget373@gmail.com'
+EMAIL_HOST_PASSWORD = 'kqcx rakr iayg imgx'  # Utilisez un mot de passe d'application pour Gmail
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
@@ -191,3 +195,10 @@ SPECTACULAR_SETTINGS = {
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
     'REDOC_DIST': 'SIDECAR',
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.vercel.app",
+    "https://django-ecommerce-blog.vercel.app",
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

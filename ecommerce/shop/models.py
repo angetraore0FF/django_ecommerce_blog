@@ -129,9 +129,9 @@ class Commande(models.Model):
     code_promo = models.ForeignKey(CodePromo, null=True, blank=True, on_delete=models.SET_NULL)
     montant_total = models.DecimalField(max_digits=10, decimal_places=2)
     statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='EN_ATTENTE')
-    adresse_livraison = models.TextField(null=True, blank=True)
-    adresse_facturation = models.TextField(null=True, blank=True)
-    methode_paiement = models.CharField(null=True, blank=True)
+    adresse_livraison = models.TextField(null=True, blank=True, max_length=255)
+    adresse_facturation = models.TextField(null=True, blank=True, max_length=255)
+    methode_paiement = models.CharField(null=True, blank=True, max_length=150)
 
     def __str__(self):
         return f"Commande #{self.id} - {self.utilisateur.email}"
